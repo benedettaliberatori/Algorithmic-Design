@@ -9,6 +9,6 @@ The directory `Reports` contains the pdf with more in depth explanations.
 
 * `Homework 1` : [Strassen.pdf](https://github.com/benedettaliberatori/Algorithmic-Design/blob/main/Reports/Strassen.pdf)
 * `Homework 2` : [Trees_and_Algorithms.pdf](https://github.com/benedettaliberatori/Algorithmic-Design/blob/main/Reports/Trees_and_Algorithms.pdf)
-* `Homework 3` : [Dijkstra.pdf](https://github.com/benedettaliberatori/Algorithmic-Design/blob/main/Reports/Dijkstra.pdf)
+* `Homework 3` : [Routing_Algorithms.pdf](https://github.com/benedettaliberatori/Algorithmic-Design/blob/main/Reports/Routing_Algorithms.pdf)
 
 
