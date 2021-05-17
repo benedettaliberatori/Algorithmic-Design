@@ -14,7 +14,7 @@ def pair_order(a,b) -> bool:
 
     '''
     a1, a2 = a
-    b2, b2 = b
+    b1, b2 = b
     return a2 <= b2
 
 '''-----------------------------------------------------------------------------------------------------------------'''
@@ -182,54 +182,55 @@ def Dijkstra(G: graph, src: int):
     assert src in G.nodes , 'Source node not found'
 
     # Initialization
-    dist=[inf for i in G.nodes]
-    pred=[None for i in G.nodes]
+    dist=[inf for _ in G.nodes]
+    pred=[None for _ in G.nodes]
     dist[src-1] = 0
-
+    
     # Filling the Priority Queue with couples
     # of node and distance from the src (up to now).
     # using the pair_order operation for 
     # comparison.  
+    
     H = binheap([(v, dist[v-1]) for v in G.nodes], pair_order)
-
+    
     while not H.is_empty():
         u , _ = H.remove_minimum()
-        
-        
+               
         
         for v in G.adj[u]:
                
                 relax(H, u, v, G.adj[u][v], dist, pred)
-                
+        
     
     return dist, pred 
 
 
-def witness_search(G: graph, src: int, dst: int, maxdist: int ,x=None) -> int:
+def witness_search(G: graph, src: int, dst: int, maxdist: int ,x) -> int:
     
     assert src in G.nodes , 'Source node not found'
 
     
 
     # Initialization
-    dist =[inf for n in G.nodes if n!=x]
-    pred = [None for n in G.nodes if n!=x]
+    dist =[inf for n in G.nodes]
+    pred = [None for n in G.nodes]
     dist[src-1] = 0
 
-    H = binheap([(v, dist[v-1]) for v in G.nodes], pair_order)
+    H = binheap([(v, dist[v-1]) for v in G.nodes ], pair_order)
     
 
     while not H.is_empty():
         u , u_dist = H.remove_minimum()
        
         if u == dst: return u_dist
-         
-        for v in G.adj[u]:
-            if v not in x:
-                if G.adj[u][v] > maxdist: break
-                                        
-                else:
-                    relax(H, u, v, G.adj[u][v], dist, pred)
+
+        if u not in x:
+            for v in G.adj[u]:
+                if v not in x:
+                    if G.adj[u][v] > maxdist: break
+                                            
+                    else:
+                        relax(H, u, v, G.adj[u][v], dist, pred)
             
 
 
@@ -272,13 +273,17 @@ def shortcut(G: graph, v: int, removed: set)-> None:
             if w not in removed:
                 shortcut_cost = G.adj[u][v] + G.adj[v][w]
                 
+                 
                 # compute the shortest distance between u and w 
                 witness_cost = witness_search(G, u, w, shortcut_cost,removed)
             
             
             # add shortcut if needed
                 if shortcut_cost < witness_cost:
-                    G.insert_edge(u,w,shortcut_cost)
+                #    if w in G.adj[u]:
+                 #       G.adj[u][w] = shortcut_cost
+                 #   else:
+                   G.insert_edge(u,w,shortcut_cost)
 
 def preprocessing(G: graph)->None:
     '''
@@ -385,9 +390,10 @@ if __name__ == '__main__':
     g.insert_edge(1, 6, 1)
     g.insert_edge(5, 1, 3)
     g.insert_edge(1, 5, 1)
-    g.insert_edge(5, 6, 1)
+    g.insert_edge(5,6,1)
     g.insert_edge(6, 8, 1)
     g.insert_edge(8, 1, 1)
+    g.insert_edge(8,6,3)
     g.insert_edge(8,7,1)
     g.insert_edge(7,8,1)
     g.insert_edge(4,8,3)

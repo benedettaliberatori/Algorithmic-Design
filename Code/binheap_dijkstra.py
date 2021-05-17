@@ -10,8 +10,7 @@ def max_order(a: Number, b: Number) -> bool:
     return a >= b
 
 class binheap(Generic[T]):
-    LEFT = 0
-    RIGHT = 1
+    
     def __init__(self, A: Union[int, List[T]], total_order=None):
         
         if total_order is None:
@@ -27,17 +26,11 @@ class binheap(Generic[T]):
             self._size = len(A)
             self._A = A
 
-        indexes=[0 for i in range(len(self._A))]
-
-       
-
-        for i in range(len(self._A)):
-            for j in self._A[0]:
-                if self._A[i] == j:
-                    indexes[j-1]=i+1
-        self.indexes = indexes
-        
-        
+        # additional member for the indexes of the graphs nodes in the heap
+        # since the heap is initialized as:
+        #  H = binheap([(v, dist[v-1]) for v in G.nodes], pair_order)   
+        # this can be initialized as :  
+        self.indexes = [v-1 for v,_ in self._A]
 
         self._build_heap()
 
